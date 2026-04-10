@@ -14,9 +14,9 @@ public class InMemoryTimeLimitRepository implements TimeLimitRepository {
     public List<TimeLimit> findAll() {
         return List.of(
                 new TimeLimit(30, TimeUnit.SECONDS, true),
-                new TimeLimit(60, TimeUnit.SECONDS, true),
-                new TimeLimit(90, TimeUnit.SECONDS, true),
-                new TimeLimit(120, TimeUnit.SECONDS, true)
+                new TimeLimit(60, TimeUnit.SECONDS, false),
+                new TimeLimit(90, TimeUnit.SECONDS, false),
+                new TimeLimit(120, TimeUnit.SECONDS, false)
         );
     }
 }
