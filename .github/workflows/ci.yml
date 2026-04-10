@@ -7,5 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-artifact:
+  build:
     uses: TypeSpeedOrg/ci-template/.github/workflows/java.yml@feature-ci-templates
+    with:
+      image-name: 'zeus-backend'
+      dockerfile-path: zeus-service
