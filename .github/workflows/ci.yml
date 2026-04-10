@@ -3,7 +3,16 @@ name: CI
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
-  build-artifact:
+  build:
     uses: TypeSpeedOrg/ci-template/.github/workflows/java.yml@feature-ci-templates
+    with:
+      image-name: 'zeus-backend'
+      dockerfile-path: zeus-service
