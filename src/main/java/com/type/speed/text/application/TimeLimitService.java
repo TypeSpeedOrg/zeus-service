@@ -16,7 +16,7 @@ public class TimeLimitService {
 
     public List<TimeLimitDto> findAll() {
         return timeLimitRepository.findAll().stream()
-                .map(timeLimit -> new TimeLimitDto(timeLimit.getValue(), timeLimit.getTimeUnit().name(), timeLimit.isDefault()))
+                .map(timeLimit -> new TimeLimitDto(timeLimit.getValueSeconds(), timeLimit.getTimeUnit(), timeLimit.isDefault()))
                 .toList();
     }
 }
