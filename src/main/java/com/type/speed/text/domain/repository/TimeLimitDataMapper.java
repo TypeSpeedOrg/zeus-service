@@ -4,7 +4,7 @@ import com.type.speed.text.domain.TimeLimit;
 
 import java.util.List;
 
-public interface TimeLimitRepository {
+public interface TimeLimitDataMapper {
 
     List<TimeLimit> findAll();
 }
