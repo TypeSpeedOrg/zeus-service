@@ -5,11 +5,12 @@ import com.type.speed.text.domain.repository.TimeLimitDataMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Component
+@Repository
 public class TimeLimitSQLDataMapper implements TimeLimitDataMapper {
     private final JdbcTemplate jdbcTemplate;
 

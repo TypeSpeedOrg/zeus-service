@@ -6,45 +6,41 @@ import com.type.speed.text.application.dto.TimeLimitDto;
 import com.type.speed.text.application.dto.WordConfigDto;
 import com.type.speed.text.domain.SpecialSymbols;
 import com.type.speed.text.domain.WordLength;
-import com.type.speed.text.domain.service.TextLanguageService;
-import com.type.speed.text.domain.service.TimeLimitService;
-import com.type.speed.text.domain.service.WordConfigService;
+import com.type.speed.text.domain.repository.TextLanguageDataMapper;
+import com.type.speed.text.domain.repository.TimeLimitDataMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class TextConfigService {
     private static final Logger logger = LoggerFactory.getLogger(TextConfigService.class);
-    private final TextLanguageService textLanguageService;
-    private final TimeLimitService timeLimitService;
+    private final TextLanguageDataMapper textLanguageDataMapper;
+    private final TimeLimitDataMapper timeLimitDataMapper;
     private final TimeLimitMapper timeLimitMapper;
-    private final WordConfigService wordConfigService;
     private final WordConfigMapper wordConfigMapper;
 
-    public TextConfigService(TextLanguageService textLanguageService, TimeLimitService timeLimitService, TimeLimitMapper timeLimitMapper, WordConfigService wordConfigService, WordConfigMapper wordConfigMapper) {
-        this.textLanguageService = textLanguageService;
-        this.timeLimitService = timeLimitService;
+    public TextConfigService(TextLanguageDataMapper textLanguageDataMapper, TimeLimitDataMapper timeLimitDataMapper, TimeLimitMapper timeLimitMapper, WordConfigMapper wordConfigMapper) {
+        this.textLanguageDataMapper = textLanguageDataMapper;
+        this.timeLimitDataMapper = timeLimitDataMapper;
         this.timeLimitMapper = timeLimitMapper;
-        this.wordConfigService = wordConfigService;
         this.wordConfigMapper = wordConfigMapper;
     }
 
     public TextConfigDto getTextConfigs() {
-        List<TextLanguageDto> textLanguages = textLanguageService.findAll().stream()
+        List<TextLanguageDto> textLanguages = textLanguageDataMapper.findAll().stream()
                 .map(textLanguage -> new TextLanguageDto(textLanguage.getTitle(), textLanguage.getCode()))
                 .toList();
-        logger.info("Found {} textLanguages", textLanguages);
-        List<TimeLimitDto> timeLimits = timeLimitService.findAll().stream()
+        List<TimeLimitDto> timeLimits = timeLimitDataMapper.findAll().stream()
                 .map(timeLimitMapper::toResponse)
                 .toList();
-        logger.info("Found {} timeLimits", timeLimits);
-        List<WordLength> wordLengths = wordConfigService.findAllWordLength();
-        logger.info("Found {} wordLengths", wordLengths);
-        List<SpecialSymbols> specialSymbols = wordConfigService.findAllSpecialSymbols();
-        logger.info("Found {} specialSymbols", specialSymbols);
+        List<WordLength> wordLengths = Arrays.stream(WordLength.values()).toList();
+        List<SpecialSymbols> specialSymbols = Arrays.stream(SpecialSymbols.values()).toList();
+        logger.info("Successfully loaded text configurations. Languages: {}, Time limits: {}, Word lengths: {}, Special symbols: {}",
+                textLanguages.size(), timeLimits.size(), wordLengths.size(), specialSymbols.size());
         WordConfigDto wordConfigDto = wordConfigMapper.toDto(wordLengths, specialSymbols);
         return new TextConfigDto(textLanguages, timeLimits, wordConfigDto);
     }

@@ -5,7 +5,7 @@ public class TextLanguage {
     private final String code;
 
     public TextLanguage(String title, String code) {
-        if (title == null || title.isEmpty() || code == null || code.isEmpty()) {
+        if (title == null || title.isBlank() || code == null || code.isBlank()) {
             throw new IllegalArgumentException("Title and code cannot be null or empty");
         }
         this.title = title;
