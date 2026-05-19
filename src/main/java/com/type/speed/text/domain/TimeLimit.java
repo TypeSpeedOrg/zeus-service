@@ -9,10 +9,10 @@ public class TimeLimit {
 
     public TimeLimit(int valueSeconds, TimeUnit timeUnit, boolean isDefault) {
         if (valueSeconds <= 0) {
-            throw new IllegalArgumentException("value must be positive or zero");
+            throw new IllegalArgumentException("value must be positive");
         }
         if (TimeUnit.MINUTES != timeUnit && TimeUnit.SECONDS != timeUnit) {
-            throw new IllegalArgumentException("timeUnit must be either SECONDS or MINUTES or HOURS");
+            throw new IllegalArgumentException("timeUnit must be either SECONDS or MINUTES");
         }
         this.valueSeconds = valueSeconds;
         this.timeUnit = timeUnit;
